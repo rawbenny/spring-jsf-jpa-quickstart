@@ -9,7 +9,7 @@
 
 	<!-- WELCOME FILES -->
 	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>platform.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<!-- JSF FACES SERVLET -->

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.michelrisucci.jsf.model.Country;
+import com.github.michelrisucci.jsf.model.Platform;
 
 /**
  * Spring application context loader that checks if database has initial data.
@@ -46,6 +47,16 @@ public class ApplicationLoaderListener implements
 		if (count == 0) {
 			initializeDatabaseWithMockData();
 		}
+
+		jpql = new StringBuilder()//
+				.append("select count(x) ")//
+				.append("from " + Platform.class.getSimpleName() + " x ");
+		query = em.createQuery(jpql.toString(), Number.class);
+
+		count = query.getSingleResult().longValue();
+		if (count == 0) {
+			initPlatform();
+		}
 	}
 
 	/**
@@ -62,6 +73,12 @@ public class ApplicationLoaderListener implements
 		for (Country country : countries) {
 			em.persist(country);
 		}
+
+	}
+
+	private void initPlatform() {
+		Platform platform = new Platform("ABC", "12312", 11, "12312312", "");
+		em.persist(platform);
 	}
 
 }
